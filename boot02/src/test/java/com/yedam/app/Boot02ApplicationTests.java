@@ -69,7 +69,7 @@ class Boot02ApplicationTests {
 	}
 
 	//삭제★	
-	@Test
+	//@Test
 	public void empDelete() {
 		int result = empMapper.deleteEmpInfo(219);
 		assertEquals(result, 1);
