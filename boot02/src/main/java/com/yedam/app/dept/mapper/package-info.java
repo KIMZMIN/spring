@@ -1,1 +1,0 @@
-package com.yedam.app.dept.mapper;

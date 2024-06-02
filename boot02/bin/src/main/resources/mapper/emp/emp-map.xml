@@ -136,7 +136,7 @@
 			, salary = #{info.salary}
 			</if>
 		WHERE employee_id = #{eid} 
-	</update>		<!-- param명칭 그대로 / EmpMapper-->
+	</update>		<!-- param명칭 그대로  -->
 	
 	
 	<!-- 삭제 -->

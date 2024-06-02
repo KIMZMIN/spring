@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.yedam.app.dept.mapper.DeptMapper;
+import com.yedam.app.dept.service.DeptVO;
 import com.yedam.app.emp.mapper.EmpMapper;
 import com.yedam.app.emp.service.EmpVO;
 
@@ -17,6 +19,62 @@ class Boot02ApplicationTests {
 	
 	@Autowired
 	EmpMapper empMapper;
+	
+	@Autowired
+	DeptMapper deptMapper;
+	
+	//전체조회
+	//@Test
+	public void deptList() {
+		List<DeptVO> list = deptMapper.selectDeptAll();
+		assertTrue(!list.isEmpty());
+	}
+	
+	//단건조회
+	//@Test
+	public void deptInfo() {
+		DeptVO deptVO = new DeptVO();
+		deptVO.setDepartmentId(10);
+		
+		DeptVO findVO = deptMapper.selectDeptInfo(deptVO);
+		assertEquals(findVO.getManagerId(), 200);
+	}
+	
+	//등록
+	//@Test
+	public void deptInsert() {
+		DeptVO deptVO = new DeptVO();
+		deptVO.setDepartmentId(12);
+		deptVO.setDepartmentName("ITTT");
+		
+		int result = deptMapper.insertDeptInfo(deptVO);
+		
+		//System.out.println(deptVO.getDepartmentId());
+		assertEquals(result, 1);
+	}
+	
+	//수정
+	//@Test
+	public void deptUpdate() {
+		//1) 대상조회 (단건)
+		DeptVO deptVO = new DeptVO();
+		deptVO.setDepartmentId(12);
+		
+		DeptVO findVO = deptMapper.selectDeptInfo(deptVO);
+		System.out.println(findVO);
+
+		//2) 정보수정
+		findVO.setDepartmentName("ITTTT");
+		int result = deptMapper.updateDeptInfo(findVO.getDepartmentId(), findVO);
+		assertEquals(result, 1);
+	}
+	
+	//삭제
+	@Test
+	public void deptDelete() {
+		int result = deptMapper.deleteDeptInfo(12);
+		assertEquals(result, 1);
+	}
 	
 	//전체조회★
 	//@Test
