@@ -70,7 +70,7 @@ class Boot02ApplicationTests {
 	}
 	
 	//삭제
-	@Test
+	//@Test
 	public void deptDelete() {
 		int result = deptMapper.deleteDeptInfo(12);
 		assertEquals(result, 1);

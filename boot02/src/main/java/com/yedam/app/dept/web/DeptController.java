@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.dept.service.DeptService;
 import com.yedam.app.dept.service.DeptVO;
+import com.yedam.app.emp.service.EmpVO;
 
-
+@Controller
 public class DeptController {
 	@Autowired
 	DeptService deptService;
@@ -37,7 +39,8 @@ public class DeptController {
 	
 	//등록 - 페이지
 	@GetMapping("deptInsert")
-	public String deptInsertForm() {
+	public String deptInsertForm(Model model) {
+		model.addAttribute("deptVO", new DeptVO());
 		return "dept/insert";
 	}
 	
@@ -67,12 +70,12 @@ public class DeptController {
 	}
 	
 	//수정 - 처리
+//	@PostMapping("deptUpdate")
+//	@ResponseBody
+//	public Map<String, Object> deptUpdateAJAXQueryString(DeptVO deptVO){
+//		return deptService.deptUpdate(deptVO);
+//	}
 	@PostMapping("deptUpdate")
-	@ResponseBody
-	public Map<String, Object> deptUpdateAJAXQueryString(DeptVO deptVO){
-		return deptService.deptUpdate(deptVO);
-	}
-	
 	@ResponseBody
 	public Map<String, Object> deptUpdateAjaxJson(@RequestBody DeptVO deptVO){
 		return deptService.deptUpdate(deptVO);
