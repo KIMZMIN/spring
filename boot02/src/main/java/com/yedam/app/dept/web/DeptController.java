@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.dept.service.DeptService;
 import com.yedam.app.dept.service.DeptVO;
-import com.yedam.app.emp.service.EmpVO;
+
 
 public class DeptController {
 	@Autowired
@@ -29,7 +30,7 @@ public class DeptController {
 	//단건조회
 	@GetMapping("deptInfo")
 	public String deptInfo(DeptVO deptVO, Model model) {
-		DeptVO findVO = new DeptVO();
+		DeptVO findVO = deptService.deptInfo(deptVO);
 		model.addAttribute("deptInfo", findVO);
 		return "dept/info";
 	}
@@ -67,8 +68,13 @@ public class DeptController {
 	
 	//수정 - 처리
 	@PostMapping("deptUpdate")
-	@ResponseBody // => AJAX용
-	public Map<String, Object> empUpdateAJAXQueryString(DeptVO deptVO){
+	@ResponseBody
+	public Map<String, Object> deptUpdateAJAXQueryString(DeptVO deptVO){
+		return deptService.deptUpdate(deptVO);
+	}
+	
+	@ResponseBody
+	public Map<String, Object> deptUpdateAjaxJson(@RequestBody DeptVO deptVO){
 		return deptService.deptUpdate(deptVO);
 	}
 	

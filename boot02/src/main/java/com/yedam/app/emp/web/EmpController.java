@@ -30,31 +30,49 @@ public class EmpController {
 		//1) 해당기능수행 -> Service
 		List<EmpVO> list = empService.empList();
 		//2) 클라이언트에 전달할 데이터 담기
-		model.addAttribute("empList", list); //페이지에서 사용할 이름 : empList
+		model.addAttribute("empList", list); 
+		//변수표현식에서 쓸 이름? "empList"
+		//페이지에서 사용할 이름/모델 : empList
 		//3) 데이터를 출력할 페이지 결정
 		return "emp/list";
+		//이거 그냥 문자열임 -> 경로완성
 		// 슬러시가 앞에 붙으면 안됨. return "/emp/list"; 오작동일으킴.
-		// classpath:/templates/    emp/list    .html(sub
+		// 경로 : classpath:/templates/    emp/list    .html(sub
 		//         prefix			return  	 suffix
 	}
 	
 	//단건조회 : GET
-	@GetMapping("empInfo")
+	@GetMapping("empInfo") //한건을 받을때, 커맨드객체(어노테이션을 안쓰는 객체를 말함.)
+						   //커맨드 객체 => queryString(key=value&key=value...로 값을 받음)
 	public String empInfo(EmpVO empVO, Model model) {
 		//1) 해당기능수행 -> Service
-		EmpVO findVO = new EmpVO();
-		//2) 클라이언트에 전달할 데이터 담기
+		EmpVO findVO = empService.empInfo(empVO);
+		
+		//2) 클라이언트에 전달할 데이터 담기  값을 넘겨줌 // findVO (class)
 		model.addAttribute("empInfo", findVO);
 		//3) 데이터를 출력할 페이지 결정
 		return "emp/info";
+		//뷰 resolve에 저장된? 
+		// prefix = "classpath:/templates/" suffix = ".html"
+		// prefix + "emp/info" + suffix
+		//"classpath:/templates/emp/info.html"
+		// classpath => src/main/resources를 가리킴.
 	}
 	
 	//등록 - 페이지 : GET (빈페이지 불러오기)
+//	@GetMapping("empInsert")
+//	public String empInsertForm() {
+//		return "emp/insert";
+//	}
+	
+	//등록 - 페이지 : GET (빈페이지 불러오기)
 	@GetMapping("empInsert")
-	public String empInsertForm() {
+	public String empInsertForm(Model model) {
+		model.addAttribute("empVO", new EmpVO());
 		return "emp/insert";
 	}
-	
+		
+		
 	//등록 - 처리 => Form 태그를 통한 submit
 	@PostMapping("empInsert")
 	public String empInsertProcess(EmpVO empVO) {
@@ -82,14 +100,14 @@ public class EmpController {
 	}
 	
 	//수정 - 처리  : AJAX => QueryString
-	@PostMapping("empUpdate")
+	//@PostMapping("empUpdate")
 	@ResponseBody // => AJAX용
 	public Map<String, Object> empUpdateAJAXQueryString(EmpVO empVO){
 		return empService.empUpdate(empVO);
 	}
 
 	//수정 - 처리  : AJAX => JSON (@RequsetBody를 요구)
-	//@PostMapping("empUpdate")
+	@PostMapping("empUpdate")
 	@ResponseBody // => AJAX용
 	public Map<String, Object> empUpdateAjaxJson(@RequestBody EmpVO empVO){
 		return empService.empUpdate(empVO);

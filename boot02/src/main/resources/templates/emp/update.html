@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<title>사원 정보 조회</title>
+</head>
+<body>
+	<form th:object="${empInfo}">
+		<div>
+			<label for="employeeId">사원번호</label>
+			<input type="number" th:field="*{employeeId}" readonly>
+		</div>
+		<div>
+			<label for="ename">이름</label>
+			<input type="text" th:field="*{lastName}">
+		</div>
+		<div>
+			<label for="email">이메일</label>
+			<input type="email" th:field="*{email}">
+		</div>
+		<div>
+			<label for="hDate">입사일</label>
+			<input type="date" th:field="*{hireDate}">
+		</div>
+		<div>
+			<label for="job">업무</label>
+			<input type="text" th:field="*{jobId}">
+		</div>
+		<div>
+			<label for="sal">급여</label>
+			<input type="number" th:field="*{salary}">
+		</div>
+		<div>
+			<button type="button" id="updateBtn">저장</button>
+		</div>
+	</form>
+	<script>
+		$('#updateBtn').on('click', updateAjax);
+		function updateAjax(event){
+			//1) Validation Check
+			//if(validationCheck() == false) return; ] 다 의미는 같음.
+			//if(!validationCheck()) return;		 ]
+			let result = validationCheck();
+			if(result == false) return;
+			
+			//2) 보낼 데이터 정리
+			let dataObj = getEmpObj();
+			console.log(dataObj);
+			
+			//3) AJAX
+			$.ajax('empUpdate',{
+				type : 'post',
+				//contentType : 'application/x-www-form-urlencoded'
+				//data : dataObj //객체 => default로 QueryString으로 만들어줌.
+				
+				//JSON
+				contentType : 'application/JSON', 
+				data : JSON.stringify(dataObj)
+				//JSON.stringify() : 객체 or 배열 => JSON
+			})
+			.done(result=>{
+				console.log(result);
+			})
+			.fail(err => console.log(err));
+		}
+	
+		function validationCheck(){
+			let name = $('#lastName');
+			if(name.val() == ''){
+				alert('사원이름은 필수로 입력해야합니다.');
+				name.focus();
+				return false; //값을 보내도 됩니다 안됩니다 체크하는 거임. 
+			}
+			return true;
+		}
+		
+		function getEmpObj(){		//┌ Ajax용 메서드, 폼태그만 가능함.
+			let formAry = $('form').serializeArray();//문제가? 배열임.
+			// [ { name : 'employeeId', value: '209' },
+			//	 { name : 'lastName', value: 'King' }, ...
+			//	]
+			//formAry[formAry.length-1] = 100;
+			let formObj = {};
+			formAry.forEach(inputTag =>{
+				//inputTag = { name : 'employeeId', value: '209' }
+				formObj[inputTag.name] = inputTag.value;
+				// formObj['employeeId'] =  '209';
+			});
+			//forEach는 자바스크립트꺼
+			// { employeeId : '209', lastName : 'king', ... }
+			return formObj;
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"> 
+<!-- 특정경로를 통해서 파싱하겠다~ th를 해석할 경로가 필요. -->
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf Test</title>
+</head>
+<body>
+	<!-- Thymeleaf 유일한 태그... 
+	비표준태그... 브라우저가 읽어들이는 태그가 아님. 반복문, 조건문이 혹시나 충돌나는것을 방지.
+	반복하고자 하는 태그를 첨부터 끝까지 둘러쌓고 명확하게 하기 위해서. 
+	jquery 는 each         여기는 무조건 변수표현식을 이용 (달러)-->
+	<th:block th:each="num : ${#numbers.sequence(1,5)}">
+		<p th:text="${num}"></p>	
+		<p>[[ ${num} ]]</p>
+	</th:block>
+	<hr>
+	<!-- response에 담겨져있는 empInfo안에 employeeId를 불러옴 -->
+	<!--/*  기본방식 => th:속성="${}"  or   th:src="@{}"  */-->
+	<!--/* text속성 => 템플릿문법  , [[ ]] */-->
+	<p>[[ ${'사원번호 : ' + empInfo.employeeId} ]]</p>
+	<p>[[ ${empInfo.employeeId} ]]</p>
+	<p>[[ ${empInfo.lastName} ]]</p>
+	<p>[[ ${empInfo.jobId} ]]</p>
+	
+</body>
+</html>
