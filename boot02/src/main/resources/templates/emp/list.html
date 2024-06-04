@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout}"
+      layout:fragment="Content">
 <head>
 <meta charset="UTF-8">
 <meta name="contextPath" th:value="${#httpServletRequest.getContextPath()}">
@@ -34,7 +37,7 @@
 			</th:block>
 		</tbody>
 	</table>
-	<script>
+	<script> //이름이 붙는다면 ? -> 이렇게 하려고 한거임. jquery에서는 val인데 안먹을수도있음.
 	const context = $('meta[name="contextPath"]').attr('value');
 		$('tbody>tr').on('click', function(event){
 			let eid = $(event.currentTarget).children().first().text();

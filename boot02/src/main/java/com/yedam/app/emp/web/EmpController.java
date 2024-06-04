@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.emp.service.EmpService;
@@ -16,6 +17,8 @@ import com.yedam.app.emp.service.EmpVO;
 
 @Controller // => 사용자의 요청(EndPoint)이 들어오는 것에 대한 처리
 			// : url + method => service => view
+//@RequestMapping("emp") 이렇게 하고 밑에
+//@GetMapping("list") 이런식으로 하면 경로가 emp/list 이렇게 됨
 public class EmpController {
 	//해당 컨트롤러에서 제공하는 서비스들 추가
 	@Autowired
