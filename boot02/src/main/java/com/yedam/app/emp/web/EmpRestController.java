@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yedam.app.emp.service.EmpService;
 import com.yedam.app.emp.service.EmpVO;
 
-@RestController //@Controller + 모든 메소드에 @ResponseBody를 적용
-				//@ResponseBody : AJAX ; 데이터를 바로 응답해줌?
+@RestController //@Controller + 모든 메소드에 @ResponseBody를 적용 
+				//@ResponseBody : AJAX ; 데이터를 바로 응답해줌? JSON을 알아서 변환해줌.
 public class EmpRestController {
 	@Autowired
 	EmpService empService;
@@ -49,7 +49,7 @@ public class EmpRestController {
 	}
 	
 	//등록 : POST => emps
-	@PostMapping("emps")  //@RequestBody : JSON ; POST, PUT 일때 RequestBody를 씀.
+	@PostMapping("emps")  //@RequestBody : JSON ; POST, PUT 일때 RequestBody를 씀. 다른방식으로 접근 불가.
 	public int empInsert(@RequestBody EmpVO empVO) {
 		return empService.empInsert(empVO);
 	}

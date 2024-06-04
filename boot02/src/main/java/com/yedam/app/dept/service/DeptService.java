@@ -11,7 +11,7 @@ public interface DeptService {
 	public DeptVO deptInfo(DeptVO deptVO);
 	
 	//등록
-	public int deptInset(DeptVO deptVO);
+	public int deptInsert(DeptVO deptVO);
 	
 	//수정
 	public Map<String, Object> deptUpdate(DeptVO deptVO);

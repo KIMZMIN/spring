@@ -27,7 +27,7 @@ public class DeptServiceImpl implements DeptService {
 	}
 
 	@Override
-	public int deptInset(DeptVO deptVO) {
+	public int deptInsert(DeptVO deptVO) {
 		int result = deptMapper.insertDeptInfo(deptVO);
 		return result == 1 ? deptVO.getDepartmentId() : -1;
 	}

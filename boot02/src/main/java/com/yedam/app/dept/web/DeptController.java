@@ -47,7 +47,7 @@ public class DeptController {
 	//등록 - 처리
 	@PostMapping("deptInsert")
 	public String deptInsertProcess(DeptVO deptVO) {
-		int deptId = deptService.deptInset(deptVO);
+		int deptId = deptService.deptInsert(deptVO);
 		String url = null;
 		if(deptId > -1) {
 			url = "redirect:deptInfo?departmentId=" + deptId;
