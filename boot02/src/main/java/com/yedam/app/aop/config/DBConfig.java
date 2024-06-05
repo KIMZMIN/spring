@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 															  // 이거 없어도 일단 돌아가서 주석처리했음.
 //파일업로드나 관련 빈들을 사용할때 이 틀을 사용함.
 public class DBConfig {
+	//TransactionManager는 인터페이스다  / / 정정..
 	/*
-	 * @Bean TransactionManager transactionManager(DataSource dataSource) { return
+	 * @Bean 
+	 * TransactionManager transactionManager(DataSource dataSource) { return
 	 * new DataSourceTransactionManager(dataSource); } //얘를 등록해야 @Transactional이 작동?
 	 */
 }
