@@ -52,8 +52,10 @@ public class SpringSecurityConfig {
 						// authenticated 인증된 사람들만 , 나머지 경로에 대해 처리
 		.and()
 		.formLogin()
+			.defaultSuccessUrl("/url")
 		.and()
-		.logout();
+		.logout()
+			.logoutSuccessUrl("/url");
 		return http.build();
 	}
 	
