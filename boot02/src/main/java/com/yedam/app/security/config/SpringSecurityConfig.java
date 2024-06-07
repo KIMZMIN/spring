@@ -20,7 +20,7 @@ public class SpringSecurityConfig {
 	}
 	
 	//메모리상  인증정보 등록 => 테스트 전용방식
-	@Bean
+/*	@Bean
 	public InMemoryUserDetailsManager inMemoryUserDetailsService() {
 		UserDetails user = User.builder()
 							 .username("user1")
@@ -33,12 +33,12 @@ public class SpringSecurityConfig {
 				 .username("admin1")
 				 .password(passwordEncoder().encode("1234"))
 				 //.roles("ADMIN") //ROLE_ADMIN
-				 .authorities("ROLE_ADMIN") 
+				 .authorities("ROLE_ADMIN") //.authorities("ROLE_ADMIN", "ROLE_USER") 
 				 .build();
 		
 		return new InMemoryUserDetailsManager(user, admin);		
 	}
-	
+*/
 	//인증 및 인가 설정
 	@Bean 
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -52,10 +52,13 @@ public class SpringSecurityConfig {
 						// authenticated 인증된 사람들만 , 나머지 경로에 대해 처리
 		.and()
 		.formLogin()
-			.defaultSuccessUrl("/url")
+			.defaultSuccessUrl("/all")
 		.and()
 		.logout()
-			.logoutSuccessUrl("/url");
+			.logoutSuccessUrl("/all");
+		
+		//http.csrf().disable();//csrf를 사용하지 않겠습니다 => 토큰을 사용하지 않음.
+		
 		return http.build();
 	}
 	
