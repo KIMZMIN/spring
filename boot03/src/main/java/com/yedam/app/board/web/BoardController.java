@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.board.service.BoardService;
@@ -34,8 +35,8 @@ public class BoardController {
 	@GetMapping("boardInfo")				//페이지 전달 Model...
 	public String boardInfo(BoardVO boardVO, Model model) {
 		BoardVO findVO = boardService.boardInfo(boardVO);
-		model.addAttribute("boardInfo", findVO);
-		
+		model.addAttribute("board", findVO);
+						  // ㄴ 이게 boardInfo.html에서 씀ㅇㅇ
 		return "board/boardInfo";
 	}
 
@@ -57,30 +58,30 @@ public class BoardController {
 	
 	//수정 - 페이지 : URI - boardUpdate / PARAMETER - BoardVO(QueryString)
 	//  		   RETURN - board/boardUpdate
+	// => 사실상 단건조회
 	@GetMapping("boardUpdate")
-	public String boardUpdateForm(Integer bno, Model model) {
-		BoardVO boardVO = new BoardVO();
-		boardVO.setBno(bno);
-		
+	public String boardUpdateForm(BoardVO boardVO, Model model) {
 		BoardVO findVO = boardService.boardInfo(boardVO);
-		model.addAttribute("boardInfo", findVO);
+		model.addAttribute("board", findVO);
 		
 		return "board/boardUpdate";
 	}
 	
 	//수정 - 처리   : URI - boardUpdate / PARAMETER - BoardVO(JSON)
 	// 			   RETURN - 수정결과 데이터 (Map)
+	// => 사실상 등록
+	//무엇을 보고 AJAX인지 파악? => return...하는게 페이지가 아니라 데이터면 ajax.
 	@PostMapping("boardUpdate")
-	@ResponseBody
+	@ResponseBody //Ajax라는 의미임 ㅇㅇ
 	public Map<String, Object> boardUpdateJson(@RequestBody BoardVO boardVO){
 		return boardService.updateBoard(boardVO);
 	}
 	
 	//삭제 - 처리   : URI - boardDelete / PARAMETER - Integer
 	//				RETURN - 전체조회 다시 호출
-	@PostMapping("boardDelete")
-	public String boardDelete(int boardVO) {
-		boardService.deleteBoard(boardVO);
+	@GetMapping("boardDelete") //쓸수도 있고 안쓸수도 있음. RequestParam을 명시하면 무조건 값을 입력해야함.
+	public String boardDelete(Integer bno) {
+		boardService.deleteBoard(bno);
 		return "redirect:boardList";
 	}
 }

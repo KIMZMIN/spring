@@ -36,7 +36,7 @@
 			SELECT NVL(MAX(bno), 100) + 1
 			FROM board
 		</selectKey>
-		INSERT INTO (
+		INSERT INTO board(
 			    bno
 			    , title
 			    , contents

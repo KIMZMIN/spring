@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}"
+	  layout:fragment="content">
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<title>게시글 등록</title>
+</head>
+<body> 
+<!-- 일반적인형태!!! >> boardUpdata 편의성을 위한 폼 -->
+	<form name="insertForm" th:action="@{/boardInsert}" method="post">
+		<table>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="title"></td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" name="writer"></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea name="contents"></textarea></td>
+			</tr>
+			<tr>
+				<th>첨부파일</th>
+				<td><input type="text" name="image"></td>
+			</tr>
+			<tr>
+				<th>작성일자</th>
+				<td><input type="text" name="regdate" placeholder="yyyy/MM/dd"></td>
+			</tr>
+		</table>
+		<button type="submit">등록</button>
+	</form>
+	<script>
+		/* let insertForm = $('form[name="insertForm"]');
+		insertForm.addEventListener(); 
+		버튼이면 클릭이벤트해도되는데, 폼자체는 아님. */
+		$(insertForm).on('submit', boardInserthandler);
+		function boardInserthandler(event){
+			//필드 - target , currentTarget
+			
+			//메소드 - stopPropagation():이벤트버블링 막음, 버블링은 자동으로 생김, 중첩;
+			//      - preventDefault() : 폼태그, a태그와 같이 기본적으로 등록된. 
+			//		  submit이벤트를 실행시키면 내부값을 통신시킴. 자동으로 등록된것을 일시적으로 막을떄 사용
+			event.preventDefault();
+			let title = $('input[name="title"]');
+			let writer = $('input[name="writer"]');
+			
+			if(title.val() == ''){
+				alert('제목이 입력되지 않았습니다.');
+				title.focus();
+				return;
+			}
+			if(writer.val() == ''){
+				alert('작성자가 입력되지 않았습니다.');
+				writer.focus();
+				return;
+			}
+			
+			insertForm.submit();
+		};
+	</script>
+</body>
+</html>
